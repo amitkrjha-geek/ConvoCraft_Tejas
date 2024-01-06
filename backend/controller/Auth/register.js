@@ -2,8 +2,8 @@ import express from "express";
 import Joi from "joi";
 import bycrypt from "bcrypt";
 import axios from "axios";
-import User from '../models/user.js';
-import RedisServices from "../services/redisServices.js";
+import User from '../../models/user.js';
+import RedisServices from "../../services/redisServices.js";
 const router = express.Router();
 const registerUser = async (req, res, next) => {
     const userSchema = Joi.object({

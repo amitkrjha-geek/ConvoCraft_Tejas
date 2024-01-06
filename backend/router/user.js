@@ -3,9 +3,9 @@ const require = createRequire(import.meta.url);
 const express =require('express');
 const passport = require('passport');
 const router=express.Router();
-import registerUser from "../controller/register.js";
-import login from "../controller/login.js";
-import logout from "../controller/logout.js";
+import registerUser from "../controller/Auth/register.js";
+import login from "../controller/Auth/login.js";
+import logout from "../controller/Auth/logout.js";
 
 router.get('/', (req, res) => {
     res.json({

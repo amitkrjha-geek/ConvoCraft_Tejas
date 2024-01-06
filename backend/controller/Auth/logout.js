@@ -1,6 +1,6 @@
-import JWTSERVICES from "../services/jwtServices.js";
+import JWTSERVICES from "../../services/jwtServices.js";
 import joi from "joi";
-import RedisServices from "../services/redisServices.js";
+import RedisServices from "../../services/redisServices.js";
 
 const logout = async (req, res, next) => {
   const schema = joi.object({
