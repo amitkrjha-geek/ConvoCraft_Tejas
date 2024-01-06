@@ -1,8 +1,8 @@
 import asyncHandler from 'express-async-handler';
-import Chat from '../models/Chat'
-import User from '../models/User';
+import Chat from '../models/Chat.js'
+import User from '../models/User.js';
 // fetch single chat or create a chat with requested user
-const accessChat = asyncHandler(async (req, res) => {
+export const accessChat = asyncHandler(async (req, res) => {
     const { userId } = req.body;
     if (!userId) {
         console.log("userId is not valid");
@@ -45,7 +45,7 @@ const accessChat = asyncHandler(async (req, res) => {
 });
 
 // get all the chats for particular user
-const fetchChats = asyncHandler(async (req, res) => {
+export const fetchChats = asyncHandler(async (req, res) => {
     try {
         chat.find({ users: { $elemMatch: { $eq: req.user._id } } })
             .populate("users", "-password")
