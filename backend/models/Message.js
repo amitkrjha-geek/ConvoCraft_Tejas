@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
-import User from "./User";
-import Chat from "./Chat";
+import User from "./User.js";
+import Chat from "./Chat.js";
 
 const messageSchema = new mongoose.Schema({
     sender: { type: mongoose.Schema.ObjectId, ref: User },
     contentType: { type: String, trim: true },
-    content: { type: string, trim: true },
-    chat: { type: mongoose.Schema.ObjectId, ref: Chat },
+    content: { type: String, trim: true },
+   // chat: { type: mongoose.Schema.ObjectId,ref:Chat},
     reciever: [{ type: mongoose.Schema.ObjectId, ref: User }],
     
 },
