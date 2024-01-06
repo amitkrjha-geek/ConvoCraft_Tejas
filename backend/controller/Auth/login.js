@@ -2,9 +2,9 @@ import express from "express";
 import Joi from "joi";
 import bycrypt from "bcrypt";
 import axios from "axios";
-import User from '../models/user.js';
-import JWTSERVICES from "../services/jwtServices.js";
-import RedisServices from "../services/redisServices.js";
+import User from '../../models/user.js';
+import JWTSERVICES from "../../services/jwtServices.js";
+import RedisServices from "../../services/redisServices.js";
 const refreshSecret = "mynameisankurshukla"
 const login = async (req, res, next) => {
     const userSchema = Joi.object({

@@ -1,6 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import Chat from '../models/Chat.js'
-import User from '../models/User.js';
+import User from '../models/user.js';
 // fetch single chat or create a chat with requested user
 export const accessChat = asyncHandler(async (req, res) => {
     const { userId } = req.body;
