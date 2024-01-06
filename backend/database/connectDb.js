@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
+import dotenv from 'dotenv';
+
+dotenv.config();
 const dbConnect=()=>{
-mongoose.connect("mongodb+srv://ankurshuklamet19:AhgL2uJtIzV31AKd@cluster0.yjr8v49.mongodb.net/?retryWrites=true&w=majority",{
+mongoose.connect(process.env.DB_URL,{
     dbname:'ConvoCraft_Tejas',
 }).then(()=>{
     console.log("Database connected")
