@@ -7,9 +7,11 @@ import registerUser from "../controller/Auth/register.js";
 import login from "../controller/Auth/login.js";
 import logout from "../controller/Auth/logout.js";
 import updateProfile from '../controller/Users/profile.js';
+import { allUsers } from '../controller/Users/getAllUsers.js';
 
 router.get('/user/:id', updateProfile)
-router.post("/register",registerUser);
+router.post("/register", registerUser);
+router.route("/").get(allUsers);
 router.post("/login", login);
 router.post('/logout',logout);
 // router.get("/auth/google", passport.authenticate('google', { scope: ["profile", "email"] }));
