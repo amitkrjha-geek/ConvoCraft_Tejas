@@ -4,7 +4,7 @@ import bycrypt from "bcrypt";
 import axios from "axios";
 import User from '../../models/user.js';
 import JWTSERVICES from "../../services/jwtServices.js";
-import RedisServices from "../../services/redisServices.js";
+//import createClient from "../../services/redisServices.js";
 const refreshSecret = "mynameisankurshukla"
 const login = async (req, res, next) => {
     const userSchema = Joi.object({
@@ -35,7 +35,7 @@ const login = async (req, res, next) => {
               const refresh_token = JWTSERVICES.sign({ id: id }, "7d", refreshSecret);
   
               const ttl = 60 * 60 * 24 * 7;
-            //   RedisServices.createClient().set(id, refresh_token, "ex", ttl).then((ok) => {
+            //   createClient.set(id, refresh_token, "ex", ttl).then((ok) => {
             //     if (!ok) {
             //       return res.status(500).json({ error: "Internal Server Error" })
             //     }
