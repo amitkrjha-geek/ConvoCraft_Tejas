@@ -63,20 +63,20 @@ const registerUser = async (req, res, next) => {
         //       console.log(err)
         //       console.log("error in sending mail to :" + email);
         //     });
-          console.log("first1", success);
+          // console.log("first1", success);
 
-          if (success) {
-            // set the otp in redis
-            const ttl = 60 * 10; // for 10 mins
-            const ok = RedisServices.createClient().set(email, otp, "EX", ttl);
-            if (!ok) {
-              // discord.SendErrorMessageToDiscord(email, "OTP SEND", "error in setup the otp in redis !!");
-              return res.status(500).json({ error: "Internal Server Error" });
-            }
-          } else {
-            // discord.SendErrorMessageToDiscord(email, "OTP SEND", "error in setup the otp in redis !!");
-            return res.status(500).json({ error: "Internal Server Error" });
-          }
+          // if (success) {
+          //   // set the otp in redis
+          //   const ttl = 60 * 10; // for 10 mins
+          //   const ok = RedisServices.createClient().set(email, otp, "EX", ttl);
+          //   if (!ok) {
+          //     // discord.SendErrorMessageToDiscord(email, "OTP SEND", "error in setup the otp in redis !!");
+          //     return res.status(500).json({ error: "Internal Server Error" });
+          //   }
+          // } else {
+          //   // discord.SendErrorMessageToDiscord(email, "OTP SEND", "error in setup the otp in redis !!");
+          //   return res.status(500).json({ error: "Internal Server Error" });
+          // }
           return res.status(201).json({ message: "User created successfully" });
         })
         .catch((err) => {

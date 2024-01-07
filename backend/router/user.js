@@ -6,18 +6,9 @@ const router=express.Router();
 import registerUser from "../controller/Auth/register.js";
 import login from "../controller/Auth/login.js";
 import logout from "../controller/Auth/logout.js";
+import updateProfile from '../controller/Users/profile.js';
 
-// router.get('/users/:id', (req, res) => {
-//     console.log(req.params);
-//     res.json({
-//         message: 'Updated',
-//     })
-//   })
-router.get('/', (req, res) => {
-    res.json({
-        message:"hello world"
-    })
-});
+router.get('/user/:id', updateProfile)
 router.post("/register",registerUser);
 router.post("/login", login);
 router.post('/logout',logout);
