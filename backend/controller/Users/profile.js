@@ -1,3 +1,4 @@
+import User from "../../models/user.js";
 const updateProfile = async(req, res) => {
     const {id}=req.params;
     const { name, profileImageUrl, phoneNumber} = req.body;
