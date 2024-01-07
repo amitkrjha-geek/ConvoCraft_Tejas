@@ -2,6 +2,9 @@ import  express  from 'express';
 const router = express.Router();
 import { fetchChats,accessChat,renameGroup,removeFromGroup,addToGroup,createGroupChat } from '../controller/chat.js';
 //get the all the chat for particular user
+router.route("/hello").get((req, res) => {
+    res.status(200).send("Hello from chat api");
+})
 router.route("/").get(fetchChats);
 
 

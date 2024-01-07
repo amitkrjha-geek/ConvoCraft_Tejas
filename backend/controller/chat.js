@@ -2,16 +2,19 @@ import asyncHandler from 'express-async-handler';
 import Chat from '../models/Chat.js'
 import User from '../models/user.js';
 // fetch single chat or create a chat with requested user
+console.log(5);
 export const accessChat = asyncHandler(async (req, res) => {
+    
     const { userId } = req.body;
+    console.log(userId);
     if (!userId) {
-        console.log("userId is not valid");
+        
         return res.sendStatus(400);
     }
-    let isChat = await Chat.find({
+    var isChat = await Chat.find({
         isGroupChat: false,
         $and: [
-            { users: { $elemMatch: { $eq: req.user._id } } },
+            { users: { $elemMatch: { $eq: req.body.user_id } } },
             { users: { $elemMatch: { $eq: userId } } },
         ]
     })
@@ -19,26 +22,28 @@ export const accessChat = asyncHandler(async (req, res) => {
         .populate("latestMessage");
     isChat = await User.populate(isChat, {
         path: "latestMessage.Sender",
-        select:"name pic email",
+        select:"name profileImageUrl email",
     })
     if (isChat.length > 0) {
         res.send(isChat[0]);
     }
     else
     {
-        let chatData = {
+        var chatData = {
             chatName: "sender",
             isGroupChat: false,
-            users: [req.user._id, userId],
+            users: [req.body.user_id, userId],
         };
     }
     try {
+        console.log(4)
         const createdChat = await Chat.create(chatData);
-        const FullChat = await Chat.findone({ _id: createdChat._id })
+        const FullChat = await Chat.findById(createdChat._id)
             .populate("users", "-password");
         res.status(200).json(FullChat);
     }
     catch (error) {
+        console.log(3)
         res.status(400);
         throw new Error(error.message);
     }
@@ -55,7 +60,7 @@ export const fetchChats = asyncHandler(async (req, res) => {
             .then(async (results) => {
                 results = await User.populate(results, {
                     path: "latestMessage.sender",
-                    select: "name pic email",
+                    select: "name profileImageUrl email",
                 });
                 res.status(200).send(results);
             });

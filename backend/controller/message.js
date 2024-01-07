@@ -6,7 +6,7 @@ export const allMessages = asyncHandler(async (req, res) => {
     const chatId = req.params.chatId;
     try {
         const messages = await Message.find({ chatId })
-            .populate("sender", "name pic email")
+            .populate("sender", "name profileImageUrl email")
             .populate("chat");
         res.json(messages);
     }
@@ -35,11 +35,11 @@ export const sendMessage = asyncHandler(async (req, res) => {
     try {
       var message = await Message.create(newMessage);
 
-      message = await message.populate("sender", "name pic").execPopulate();
+      message = await message.populate("sender", "name profileImageUrl").execPopulate();
       message = await message.populate("chat").execPopulate();
       message = await User.populate(message, {
         path: "chat.users",
-        select: "name pic email",
+        select: "name profileImageUrl email",
       });
 
       await Chat.findByIdAndUpdate(req.body.chatId, { latestMessage: message });
