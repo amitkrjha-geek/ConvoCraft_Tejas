@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 // const refresh_secret =process.env.REFRESH_SECRET;
-const refresh_secret="iamagoodboy"
+const refresh_secret="mynameisankurshukla"
 const jwt_secret="whyareyounotagoodboy"
 class JWTSERVICES{
     static sign(payload,expiry = 6000,secret = jwt_secret){

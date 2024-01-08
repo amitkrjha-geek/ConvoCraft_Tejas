@@ -2,11 +2,10 @@ import asyncHandler from 'express-async-handler';
 import Chat from '../models/Chat.js'
 import User from '../models/user.js';
 // fetch single chat or create a chat with requested user
-console.log(5);
 export const accessChat = asyncHandler(async (req, res) => {
     
     const { userId } = req.body;
-    console.log(userId);
+    // console.log(userId);
     if (!userId) {
         
         return res.sendStatus(400);
@@ -36,14 +35,14 @@ export const accessChat = asyncHandler(async (req, res) => {
         };
     }
     try {
-        console.log(4)
+        // console.log(4)
         const createdChat = await Chat.create(chatData);
         const FullChat = await Chat.findById(createdChat._id)
             .populate("users", "-password");
         res.status(200).json(FullChat);
     }
     catch (error) {
-        console.log(3)
+        // console.log(3)
         res.status(400);
         throw new Error(error.message);
     }

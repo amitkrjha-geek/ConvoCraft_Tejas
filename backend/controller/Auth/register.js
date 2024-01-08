@@ -30,6 +30,7 @@ const registerUser = async (req, res, next) => {
       console.log(hashedPassword);
       User.create({ name: name, email: email, password: hashedPassword })
         .then(async () => {
+          console.log("first")
           const otp = generateOtpCode();
           const config = {
             headers: {
@@ -39,13 +40,13 @@ const registerUser = async (req, res, next) => {
           // sending mail to user
           // console.log("first");
           let success=true;
-          // const data = {
-          //   email: email,
-          //   subject: "Verify your email address",
-          //   name:name,
-          //   otp: otp,
-          //   company: "Tech Developers",
-          // };
+          const data = {
+            email: email,
+            subject: "Verify your email address",
+            name:name,
+            otp: otp,
+            company: "Tech Developers",
+          };
           // await axios
           //   .post("https://mail-server-j1vc.onrender.com/" + "api/mail-verify", data, config)
           //   .then((res) => {
@@ -56,20 +57,20 @@ const registerUser = async (req, res, next) => {
           //     console.log(err)
           //     console.log("error in sending mail to :" + email);
           //   });
-          // console.log("first1", success);
+          console.log("first1", success);
 
-          // if (success) {
-          //   // set the otp in redis
-          //   const ttl = 60 * 10; // for 10 mins
-          //   const ok = RedisServices.createClient().set(email, otp, "EX", ttl);
-          //   if (!ok) {
-          //     // discord.SendErrorMessageToDiscord(email, "OTP SEND", "error in setup the otp in redis !!");
-          //     return res.status(500).json({ error: "Internal Server Error" });
-          //   }
-          // } else {
-          //   // discord.SendErrorMessageToDiscord(email, "OTP SEND", "error in setup the otp in redis !!");
-          //   return res.status(500).json({ error: "Internal Server Error" });
-          // }
+          if (success) {
+            // set the otp in redis
+            const ttl = 60 * 10; // for 10 mins
+            const ok = RedisServices.createClient().set(email, otp, "EX", ttl);
+            if (!ok) {
+              // discord.SendErrorMessageToDiscord(email, "OTP SEND", "error in setup the otp in redis !!");
+              return res.status(500).json({ error: "Internal Server Error" });
+            }
+          } else {
+            // discord.SendErrorMessageToDiscord(email, "OTP SEND", "error in setup the otp in redis !!");
+            return res.status(500).json({ error: "Internal Server Error" });
+          }
           return res.status(201).json({ message: "User created successfully" });
         })
         .catch((err) => {
