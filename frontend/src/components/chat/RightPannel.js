@@ -1,7 +1,7 @@
 import React from 'react'
 import ChatHeader from './ChatHeader.js'
 import ChatMessage from './ChatMessage.js'
-import Input from './Input'
+import Input from './Input.js'
 
 const RightPannel = () => {
     return (
