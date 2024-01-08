@@ -5,7 +5,8 @@ import User from '../models/user.js';
 export const accessChat = asyncHandler(async (req, res) => {
     
     const { userId } = req.body;
-    // console.log(userId);
+    console.log(userId);
+    console.log(req.user._id);
     if (!userId) {
         
         return res.sendStatus(400);
@@ -13,7 +14,7 @@ export const accessChat = asyncHandler(async (req, res) => {
     var isChat = await Chat.find({
         isGroupChat: false,
         $and: [
-            { users: { $elemMatch: { $eq: req.body.user_id } } },
+            { users: { $elemMatch: { $eq: req.user._id } } },
             { users: { $elemMatch: { $eq: userId } } },
         ]
     })
@@ -31,7 +32,7 @@ export const accessChat = asyncHandler(async (req, res) => {
         var chatData = {
             chatName: "sender",
             isGroupChat: false,
-            users: [req.body.user_id, userId],
+            users: [req.user._id, userId],
         };
     }
     try {
@@ -51,7 +52,7 @@ export const accessChat = asyncHandler(async (req, res) => {
 // get all the chats for particular user
 export const fetchChats = asyncHandler(async (req, res) => {
     try {
-        chat.find({ users: { $elemMatch: { $eq: req.user._id } } })
+        Chat.find({ users: { $elemMatch: { $eq: req.user._id } } })
             .populate("users", "-password")
             .populate("groupAdmin", "-password")
             .populate("latestMessage")
@@ -111,18 +112,20 @@ export const createGroupChat = asyncHandler(async (req, res) => {
 
 export const renameGroup = asyncHandler(async (req, res) => {
     const { chatId, chatName } = req.body;
+    
     if (!chatName) res.status(400).send("Group name can't be enpty");
     
-    const updateChat = Chat.findByIdAndUpdate(
-        chatId,
-        {
-            chatName: chatName
-        },
+    const updateChat = await Chat.findOneAndUpdate(
+        { _id: chatId },
+        {$set:{
+        chatName: chatName
+    }},
         {
             new: true
         }
     ).populate("users", "-password")
         .populate("groupAdmin", "-password");
+    //console.log(updateChat);
     if (!updateChat)
     {
         res.status(400).send("Chat not found");
@@ -130,7 +133,7 @@ export const renameGroup = asyncHandler(async (req, res) => {
     else
     {
         res.json(updateChat);
-        }
+    }
 })
 
 // remove from a group

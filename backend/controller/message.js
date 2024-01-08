@@ -1,13 +1,14 @@
 import asyncHandler from "express-async-handler";
 import Message from "../models/Message.js";
+import User from "../models/Message.js";
+import Chat from "../models/Chat.js";
 
 // get all the messages for chatId
 export const allMessages = asyncHandler(async (req, res) => {
-    const chatId = req.params.chatId;
     try {
-        const messages = await Message.find({ chatId })
-            .populate("sender", "name profileImageUrl email")
-            .populate("chat");
+        const messages = await Message.find({ chat: req.params.chatId })
+          .populate("sender", "name profileImageUrl email")
+          .populate("chat");
         res.json(messages);
     }
     catch (error)
@@ -35,8 +36,8 @@ export const sendMessage = asyncHandler(async (req, res) => {
     try {
       var message = await Message.create(newMessage);
 
-      message = await message.populate("sender", "name profileImageUrl").execPopulate();
-      message = await message.populate("chat").execPopulate();
+      message = await message.populate("sender", "name profileImageUrl");
+      message = await message.populate("chat");
       message = await User.populate(message, {
         path: "chat.users",
         select: "name profileImageUrl email",
