@@ -73,6 +73,7 @@ const registerUser = async (req, res, next) => {
           return res.status(201).json({ message: "User created successfully" });
         })
         .catch((err) => {
+          console.log("error detected in user creation")
           return res.status(500).json({ error: err.message });
         });
     } catch (err) {
