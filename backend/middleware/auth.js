@@ -1,9 +1,9 @@
-import jwtService from "../services/jwtServices";
-
+import jwtService from "../services/jwtServices.js";
+import user from "../models/user.js";
 const auth = async (req, res, next) => {
     const authHeader = req.headers.authorization;
     // console.log(req.headers)
-    console.log(authHeader)
+    //console.log(authHeader)
     // clg
 
     if (!authHeader) {
@@ -14,9 +14,13 @@ const auth = async (req, res, next) => {
     try { 
         // console.log("Hi");
         const id = jwtService.verify(token) 
-        if(!id){
-            return res.status(401).json({error:"Unauth"})
+      //  console.log(id);
+        if (!id) {
+          //  console.log(5)
+            return res.status(401).json({error:"Unauth, id is invalid"})
         }
+        req.user = await user.findById(id.id).select("-password");
+      //  console.log(req.user)
         next()
     }catch (e) {
         return res.status(401).json({error:"Unauth"})
