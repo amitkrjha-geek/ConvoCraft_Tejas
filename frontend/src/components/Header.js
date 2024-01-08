@@ -1,6 +1,8 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 
 const Header = () => {
+   const userdata=useSelector((store)=>store.user)
   return (
     
       <div className="py-2 px-3 bg-grey-lighter flex flex-row justify-between items-center">

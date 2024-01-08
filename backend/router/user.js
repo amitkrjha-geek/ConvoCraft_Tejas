@@ -11,7 +11,7 @@ import { allUsers } from '../controller/Users/getAllUsers.js';
 import refresh from '../controller/Auth/refresh.js';
 import auth from '../middleware/auth.js';
 
-router.put('/user/:id',auth,updateProfile)
+router.put('/user/',auth,updateProfile)
 router.post("/register", registerUser);
 router.route("/").get(allUsers);
 router.post("/login",login);

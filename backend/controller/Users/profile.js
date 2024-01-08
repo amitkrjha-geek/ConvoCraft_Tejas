@@ -1,6 +1,6 @@
 import User from "../../models/user.js";
 const updateProfile = async(req, res) => {
-    const {id}=req.params;
+    const id=req.user._id;
     const { name, profileImageUrl, phoneNumber} = req.body;
     console.log(id,name,profileImageUrl,phoneNumber);
     const user = await User.findOneAndUpdate({_id:id}, {$set: {name:name, profileImageUrl:profileImageUrl, phoneNumber:phoneNumber}},  { new: true, useFindAndModify: false });
