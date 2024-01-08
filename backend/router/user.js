@@ -10,8 +10,10 @@ import updateProfile from '../controller/Users/profile.js';
 import { allUsers } from '../controller/Users/getAllUsers.js';
 import refresh from '../controller/Auth/refresh.js';
 import auth from '../middleware/auth.js';
+import { getUser } from '../controller/Users/getUser.js';
 
-router.put('/user/',auth,updateProfile)
+router.put('/user/', auth, updateProfile)
+router.get('/user/',auth,getUser)
 router.post("/register", registerUser);
 router.route("/").get(allUsers);
 router.post("/login",login);
