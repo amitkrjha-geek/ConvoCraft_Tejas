@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 const Login = () => {
   // const dispatch=useDispatch();
-  // const [showLogin, setShowLogin] = useState(true);
+  const [showLogin, setShowLogin] = useState(true);
   // const [errorMsgEmail, setErrorMsgEmail] = useState(null);
   // const [errorMsgPassword, setErrorMsgPassword] = useState(null);
   const Email = useRef(null);
@@ -13,7 +13,11 @@ const Login = () => {
   const Name = useRef(null);
   const navigate = useNavigate();
 
-
+// const user = true;
+const formToggle=()=>{
+  console.log("hee")
+  setShowLogin(!showLogin);
+}
  const clickHandler =()=>{
   // const Emailmsg = Emailvalidate(Email.current.value);
   //   const Passwordmsg = Passwordvalidate(Password.current.value);
@@ -54,7 +58,13 @@ const Login = () => {
     <>
     <div className="container">
       <form className="login-form" onSubmit={(e)=>e.preventDefault()}>
-        <h2 className='login-form-h2'>Login</h2>
+        <h2 className='login-form-h2'>{showLogin? "Log In" : "Sign Up"}</h2>
+        {!showLogin && <input
+          type="text"
+          placeholder="Name"
+          ref={Name}
+          className='box-input'      
+        />}
         <input
           type="text"
           placeholder="Email"
@@ -67,15 +77,15 @@ const Login = () => {
           ref={Password}
           
         />
-        <button type="submit" onClick={clickHandler}>Sign In</button>
+        <button type="submit" onClick={clickHandler}>{showLogin? "Log In" : "Sign Up"}</button>
         <div className="Login_ordiv">
-                    <div className="Login_divider"></div>
-                    <div className="Login_or">OR</div>
-                    <div className="Login_divider"></div>
+        <div className="Login_divider"></div>
+        <div className="Login_or">OR</div>
+        <div className="Login_divider"></div>
         </div>
-        <button type="submit" style={{backgroundColor:"red", marginTop:"15px"}} >SignIn with Google</button>
-        <div style={{display:"flex",color:"black", fontSize:"14px", marginTop:"5px"}}>
-        <span>New User ?</span><Link style={{marginLeft:"4px",}}>SignUp</Link><span style={{marginLeft:"4px"}}>Now</span>
+        <button type="submit" style={{backgroundColor:"red", marginTop:"15px"}} >{showLogin ? "SignIn with Google": "Sign up with Google"}</button>
+        <div style={{display:"flex",color:"black", fontSize:"16px", marginTop:"5px", gap:"2px"}}>
+        <span>{showLogin ?" New User ?": " Already a user?"}</span><Link style={{marginLeft:"4px",}} onClick={formToggle}>{showLogin?"Sign Up":"Sign In"}</Link><span style={{marginLeft:"4px"}}>Now</span>
         </div>
         
       </form>
