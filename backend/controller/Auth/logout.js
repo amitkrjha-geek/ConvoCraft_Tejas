@@ -3,6 +3,7 @@ import joi from "joi";
 import RedisServices from "../../services/redisServices.js";
 
 const logout = async (req, res, next) => {
+  const refresh_secret="mynameisankurshukla"
   const schema = joi.object({
     refresh_token: joi.string().required(),
   });
@@ -12,11 +13,11 @@ const logout = async (req, res, next) => {
   }
 
   try {
-    const { id } = JWTSERVICES.verify(req.body.refresh_token, process.env.REFRESH_SECRET);
+    const { id } = JWTSERVICES.verify(req.body.refresh_token, refresh_secret);
     RedisServices.createClient()
       .del(id)
       .then((ok) => {
-        console.log(ok);
+        // console.log(ok);
         if (ok) {
           return res.status(200).json({ message: "Logout successfully." });
         }
@@ -24,7 +25,9 @@ const logout = async (req, res, next) => {
       .catch((err) => {
         return res.status(500).json({ err: "Internal Server Error" });
       });
-  } catch (e) { }
+  } catch (e) { 
+    console.log(e.message)
+  }
 };
 
 export default logout;
