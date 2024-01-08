@@ -1,11 +1,12 @@
-import logo from './logo.svg';
 import './App.css';
-import { RouterProvider, CreateBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
+
+import { RouterProvider } from 'react-router-dom';
 import Login from './components/Login';
 import Chat from './components/Chat';
 
 function App() {
-  const appRouter = CreateBrowserRouter([
+  const appRouter = createBrowserRouter([
     {
       path: "/",
       element: <Login />,
