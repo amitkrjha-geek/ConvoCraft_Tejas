@@ -1,6 +1,7 @@
 import React from 'react';
 import { AudioRecorder } from 'react-audio-voice-recorder';
 import { db } from '../firebase.js';
+import ResponsiveAppBar from './Header.js';
 
 export default function VoiceRecorder() {
   const addAudioElement = (blob) => {
@@ -32,6 +33,7 @@ export default function VoiceRecorder() {
 
   return (
     <div>
+      <ResponsiveAppBar/>
       <AudioRecorder
         onRecordingComplete={addAudioElement}
         audioTrackConstraints={{

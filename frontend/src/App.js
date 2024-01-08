@@ -3,10 +3,11 @@ import { createBrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import Login from './components/Login';
-import Chat from './components/Chat';
+import Chat from './components/chat/Chat.js';
 import store from './utils/store';
 import { SnackbarProvider } from 'notistack';
 import VoiceRecorderComponent from './components/VoiceRecorder.js';
+import Profile from './components/Profile.js';
 
 function App() {
   const appRouter = createBrowserRouter([
@@ -20,6 +21,9 @@ function App() {
     },{
       path:'/recording',
       element: <VoiceRecorderComponent/>
+    },{
+      path:'/profile',
+      element:<Profile/>
     }
   ]);
   return (
