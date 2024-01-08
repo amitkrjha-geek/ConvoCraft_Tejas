@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Chat from './components/Chat';
 import store from './utils/store';
 import { SnackbarProvider } from 'notistack';
+import VoiceRecorderComponent from './components/VoiceRecorder.js';
 
 function App() {
   const appRouter = createBrowserRouter([
@@ -16,6 +17,9 @@ function App() {
     {
       path: "/chat",
       element: <Chat />,
+    },{
+      path:'/recording',
+      element: <VoiceRecorderComponent/>
     }
   ]);
   return (
