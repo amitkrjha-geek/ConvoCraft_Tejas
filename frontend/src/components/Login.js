@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useRef } from 'react';
 import { Emailvalidate, Passwordvalidate } from '../constants/validate';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+//import axios from 'axios';
 const Login = () => {
   // const dispatch=useDispatch();
   // const [showLogin, setShowLogin] = useState(true);
