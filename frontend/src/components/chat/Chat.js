@@ -5,8 +5,10 @@ import { useDispatch } from 'react-redux'
 import { addUser } from '../../utils/userSlice.js'
 import axios from 'axios'
 import { useEffect } from 'react'
+import { useChat } from '../Hooks/useChats.js'
 const Chat = () => {
   const dispatch = useDispatch();
+  useChat();
   const getUser=()=>{
     const atoken=window.localStorage.getItem('access_token');
     const config = {
