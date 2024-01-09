@@ -5,12 +5,15 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
+import ResponsiveAppBar from "./Header";
+import { useSnackbar } from "notistack";
 const Profile = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const user= useSelector((store)=>store.user);
   const dispatch=useDispatch();
   const navigate=useNavigate();
   const [file, setFile] = useState();
-    const [name, setName]=useState(user?.name);
+    const [naam, setName]=useState( user?.name);
     const [number, setnumber]=useState(user?.phoneNumber);
     const [url, setUrl]=useState(user?.profileImageUrl);
             // Handling case whether access token is present or not
@@ -22,7 +25,7 @@ const clickHandler =()=>{
   const atoken = window.localStorage.getItem("access_token");
   const rtoken = window.localStorage.getItem("refresh_token");
   const body={
-      name: name,
+      name: naam,
       phoneNumber:number,
       profileImageUrl:url
     }
@@ -41,6 +44,7 @@ const clickHandler =()=>{
                     .then((res) => {
                       const {name, phoneNumber, profileImageUrl} = res?.data?.userInfo;
                         //successFunction(res)
+                        enqueueSnackbar("User Updated Successfully", {variant: 'success'});
                          dispatch(addUser({name:name,phoneNumber:phoneNumber, profileImageUrl:profileImageUrl}));
                     })
                     .catch((error) => {
@@ -77,9 +81,9 @@ const clickHandler =()=>{
                         }
                     });
             } else {
-                // enqueueSnackbar("You need to login first", {
-                //     variant: "error",
-                // });
+                enqueueSnackbar("You need to login first", {
+                    variant: "error",
+                });
                 // window.localStorage.clear();
                 // setLoading(false);
                 navigate("/login");
@@ -88,51 +92,53 @@ const clickHandler =()=>{
             }
         }
   return (
-    <div className="Profile">
-      <form className="user-details-form" onSubmit={(e) => e.preventDefault()}>
-        <div style={{ display: "flex" }}>
-          <img
-            src={file}
-            alt="Avatar Preview"
-            className="avatar-preview"
-          />
-          <input className="button3" type="file" onChange={ImageHandler} />
-          {/* //<button>Upload New Image</button> */}
-        </div>
+    <>
+    <ResponsiveAppBar/>
+      <div className="Profile">
+        <form
+          className="user-details-form"
+          onSubmit={(e) => e.preventDefault()}
+        >
+          <div style={{ display: "flex" }}>
+            <img src={file} alt="Avatar Preview" className="avatar-preview" />
+            <input className="button3" type="file" onChange={ImageHandler} />
+            {/* //<button>Upload New Image</button> */}
+          </div>
 
-        <div className="form-group">
-          <label>Name:</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e?.target?.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label>Email:</label>
-          <input
-            type="email"
-            // value={formData.email}
-            // onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label>Phone Number:</label>
-          <input
-            type="tel"
-            id="phoneNumber"
-            name="phoneNumber"
-            value={number}
-            onChange={(e) => {
-              setnumber(e?.target?.value);
-            }}
-          />
-        </div>
-        <button className="button2" onClick={clickHandler}>
-          Submit
-        </button>
-      </form>
-    </div>
+          <div className="form-group">
+            <label>Name:</label>
+            <input
+              type="text"
+              // value={naam}
+              defaultValue={user?.name}
+              onChange={(e) => setName(e?.target?.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label>Email:</label>
+            <input
+              type="email"
+              value={user?.email}
+              // onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Phone Number:</label>
+            <input
+              type="tel"
+              // value={number}
+              defaultValue={user?.phoneNumber}
+              onChange={(e) => {
+                setnumber(e?.target?.value);
+              }}
+            />
+          </div>
+          <button className="button2" onClick={clickHandler}>
+            Submit
+          </button>
+        </form>
+      </div>
+    </>
   );
 };
 
