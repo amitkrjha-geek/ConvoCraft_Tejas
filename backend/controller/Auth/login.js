@@ -7,7 +7,7 @@ import JWTSERVICES from "../../services/jwtServices.js";
 //import createClient from "../../services/redisServices.js";
 import RedisServices from "../../services/redisServices.js";
 
-const refreshSecret = "mynameisankurshukla"
+const refresh_secret = process.env.REFRESH_SECRET;
 const login = async (req, res, next) => {
     const userSchema = Joi.object({
       email: Joi.string().required(),//This email can be username or phonenumber also
@@ -34,7 +34,7 @@ const login = async (req, res, next) => {
             if (isCorrect) {
               const id = user._id;
               const access_token = JWTSERVICES.sign({ id: id })
-              const refresh_token = JWTSERVICES.sign({ id: id }, "7d", refreshSecret);
+              const refresh_token = JWTSERVICES.sign({ id: id }, "7d", refresh_secret);
   
               const ttl = 60 * 60 * 24 * 7;
               RedisServices.createClient().set(id, refresh_token, "ex", ttl).then((ok) => {

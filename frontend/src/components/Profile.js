@@ -107,15 +107,25 @@ const clickHandler =async()=>{
         }
   return (
     <>
-    <ResponsiveAppBar/>
+      <ResponsiveAppBar />
       <div className="Profile">
         <form
+          encType="multipart/form-data"
           className="user-details-form"
           onSubmit={(e) => e.preventDefault()}
         >
           <div style={{ display: "flex" }}>
-            <img src={image.preview} alt="Avatar Preview" className="avatar-preview" />
-            <input name='file' className="button3" type="file" onChange={ImageHandler} />
+            <img
+              src={image.preview}
+              alt="Avatar Preview"
+              className="avatar-preview"
+            />
+            <input
+              name="file"
+              className="button3"
+              type="file"
+              onChange={ImageHandler}
+            />
           </div>
 
           <div className="form-group">

@@ -2,12 +2,14 @@ import jwtService from "../../services/jwtServices.js";
 import joi from "joi"
 import user from "../../models/user.js";
 import RedisServices from "../../services/redisServices.js";
-
+import dotenv from 'dotenv';
+dotenv.config();
 const refresh = async (req, res, next) => {
   const schema = joi.object({
     refresh_token: joi.string().required(),
   });
-  console.log(req.body);
+  const refreshSecret = process.env.REFRESH_SECRET;
+ // console.log(req.body);
   const { error } = schema.validate(req.body);
 //   if (error) {
 //     next(error);
@@ -17,7 +19,7 @@ const refresh = async (req, res, next) => {
     let userId;
     try {
     
-      const val = jwtService.verify(req.body.refresh_token,"mynameisankurshukla");
+      const val = jwtService.verify(req.body.refresh_token,refreshSecret);
       const { id } = val;
       userId = id;
       RedisServices.createClient()
