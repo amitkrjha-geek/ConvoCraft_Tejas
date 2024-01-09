@@ -110,7 +110,6 @@ const clickHandler =async()=>{
       <ResponsiveAppBar />
       <div className="Profile">
         <form
-          encType="multipart/form-data"
           className="user-details-form"
           onSubmit={(e) => e.preventDefault()}
         >
