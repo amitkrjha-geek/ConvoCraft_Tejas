@@ -1,7 +1,9 @@
 import jwt from 'jsonwebtoken';
-// const refresh_secret =process.env.REFRESH_SECRET;
-const refresh_secret="mynameisankurshukla"
-const jwt_secret="whyareyounotagoodboy"
+import dotenv from 'dotenv';
+
+dotenv.config();
+const jwt_secret=process.env.jwt_secret
+
 class JWTSERVICES{
     static sign(payload,expiry = 6000,secret = jwt_secret){
         return jwt.sign(payload,secret,{expiresIn: expiry});

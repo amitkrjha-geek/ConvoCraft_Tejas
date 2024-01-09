@@ -11,8 +11,19 @@ import { allUsers } from '../controller/Users/getAllUsers.js';
 import refresh from '../controller/Auth/refresh.js';
 import auth from '../middleware/auth.js';
 import { getUser } from '../controller/Users/getUser.js';
+import multer from 'multer'
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
 
-router.put('/user/', auth, updateProfile)
+const upload = multer({ storage: storage });
+
+router.put('/user/', auth,updateProfile)
 router.get('/user/',auth,getUser)
 router.post("/register", registerUser);
 router.route("/").get(allUsers);
