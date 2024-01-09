@@ -8,6 +8,7 @@ import store from './utils/store';
 import { SnackbarProvider } from 'notistack';
 import VoiceRecorderComponent from './components/VoiceRecorder.js';
 import Profile from './components/Profile.js';
+import DynamicPage from './components/chat/chat/DynamicPage.js';
 
 function App() {
   const appRouter = createBrowserRouter([
@@ -18,13 +19,22 @@ function App() {
     {
       path: "/chat",
       element: <Chat />,
-    },{
-      path:'/recording',
-      element: <VoiceRecorderComponent/>
-    },{
-      path:'/profile',
-      element:<Profile/>
-    }
+      // children: [
+      //   ,
+      // ],
+    },
+    {
+          path: "/chat/:id",
+          element: <DynamicPage/>,
+    },
+    {
+      path: "/recording",
+      element: <VoiceRecorderComponent />,
+    },
+    {
+      path: "/profile",
+      element: <Profile />,
+    },
   ]);
   return (
     <Provider store={store}>

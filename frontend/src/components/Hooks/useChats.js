@@ -18,7 +18,7 @@ export const useChat=() => {
             "http://localhost:5000/api/v1/chats/",
             config
         );
-        console.log(data.data);
+        // console.log(data.data);
         
         dispatch(addChat(data.data));
 

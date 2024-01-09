@@ -1,20 +1,27 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 
-const ChatHeader = () => {
+const ChatHeader = ({openChat}) => {
+  
   return (
     <div class="py-2 px-3 bg-grey-lighter flex flex-row justify-between items-center">
       <div class="flex items-center">
         <div>
           <img
             class="w-10 h-10 rounded-full"
-            src="https://darrenjameseeley.files.wordpress.com/2014/09/expendables3.jpeg"
+            src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=740&t=st=1704785462~exp=1704786062~hmac=a344c3d81899375f6c808c6764d8218153f476e812050d3208a00c9bae33bf35"
           />
         </div>
-        <div class="ml-4">
-          <p class="text-grey-darkest">New Movie! Expendables 4</p>
-          <p class="text-grey-darker text-xs mt-1">
-            Andrés, Tom, Harrison, Arnold, Sylvester
+        <div class="ml-4 grid grid-flow-row">
+          <p class="text-grey-darkest">
+            {openChat?.chatName == "sender"
+              ? openChat.users[1].name
+              : openChat?.chatName}
           </p>
+          {openChat?.isGroupChat &&
+            openChat?.users.map((u) => (
+              <p class="text-grey-darker text-xs mt-1">{u?.name}</p>
+            ))}
         </div>
       </div>
 

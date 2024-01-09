@@ -19,7 +19,6 @@ const Login = () => {
 
   // const user = true;
   const formToggle = () => {
-    console.log("hee");
     setShowLogin(!showLogin);
   };
   const clickHandler = () => {
@@ -39,7 +38,7 @@ const Login = () => {
         .post("http://localhost:5000/api/v1/login", data, config)
         .then((response) => {
           // dispatch(setLoading(false))
-          console.log(response);
+          // console.log(response);
           localStorage.setItem("userId", response.data.id);
           localStorage.setItem("access_token", response.data.access_token);
           localStorage.setItem("refresh_token", response.data.refresh_token);
@@ -50,7 +49,7 @@ const Login = () => {
           navigate("/chat");
         })
         .catch((error) => {
-          console.log("hi");
+          // console.log("hi");
           console.log(error);
           enqueueSnackbar("Invalid  Credentials", {
             variant: "error",
@@ -67,7 +66,7 @@ const Login = () => {
         .post("http://localhost:5000/api/v1/register", data, config)
         .then((response) => {
           // dispatch(setLoading(false))
-          console.log(response.data);
+          // console.log(response.data);
           enqueueSnackbar("User Successfully Registered, Sign In to continue", {
             variant: "success",
           });

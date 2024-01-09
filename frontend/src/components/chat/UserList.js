@@ -4,15 +4,11 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const UserList = () => {
-
-  
+  const data = useSelector((store) => store.chat.chatDetails);  
 //   console.log(data, 1);
 //   const individual = data?.filter((d,i) => {return d.isGroupChat===false});
 //   console.log(individual)
   
- const data = useSelector((store) => store.chat.chatDetails);  
-    
-
   return (
     <div>
       {data?.map((d) => (
