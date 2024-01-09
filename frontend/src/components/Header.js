@@ -13,10 +13,41 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useEffect } from "react";
+import { useDispatch } from 'react-redux';
+import { addUser } from '../utils/userSlice';
+
 const pages = [];
 const settings = ['Profile', 'Logout'];
 
 function ResponsiveAppBar() {
+  const dispatch = useDispatch();
+  const getUser = () => {
+    const atoken = window.localStorage.getItem("access_token");
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${atoken}`,
+      },
+    };
+    axios.get("http://localhost:5000/api/v1/user/", config).then((res) => {
+      console.log(res);
+      const { email, phoneNumber, profileImageUrl, name, _id } = res.data[0];
+      dispatch(
+        addUser({
+          email: email,
+          phoneNumber: phoneNumber,
+          profileImageUrl: profileImageUrl,
+          name: name,
+          id: _id,
+        })
+      );
+    });
+  };
+  useEffect(() => {
+    getUser();
+  }, []);
     const navigate=useNavigate()
   const [anchorElNav, setAnchorElNav] = React.useState(null)
   const [anchorElUser, setAnchorElUser] = React.useState(null)

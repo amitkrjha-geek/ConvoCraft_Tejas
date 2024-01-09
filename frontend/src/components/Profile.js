@@ -5,27 +5,44 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
+import ResponsiveAppBar from "./Header";
+import { useSnackbar } from "notistack";
 const Profile = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const user= useSelector((store)=>store.user);
   const dispatch=useDispatch();
   const navigate=useNavigate();
-  const [file, setFile] = useState();
-    const [name, setName]=useState(user?.name);
+  const [image, setImage] = useState({
+    preview:
+      "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=740&t=st=1704785462~exp=1704786062~hmac=a344c3d81899375f6c808c6764d8218153f476e812050d3208a00c9bae33bf35",
+    data: "",
+  });
+    const [naam, setName]=useState( user?.name);
     const [number, setnumber]=useState(user?.phoneNumber);
-    const [url, setUrl]=useState(user?.profileImageUrl);
+    // const [url, setUrl] = useState(
+    //   "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=740&t=st=1704785462~exp=1704786062~hmac=a344c3d81899375f6c808c6764d8218153f476e812050d3208a00c9bae33bf35"
+    // );
             // Handling case whether access token is present or not
 const ImageHandler=(e)=>{
-console.log(e.target.files);
-setFile(URL.createObjectURL(e.target.files[0]));
+  let formData = new FormData()
+    formData.append('file', image.data)
+  console.log(formData);
+const img = {
+  preview: URL.createObjectURL(e.target.files[0]),
+  data: e.target.files[0],
+};
+// console.log(img);
+setImage(img);
 }
-const clickHandler =()=>{
+const clickHandler =async()=>{
   const atoken = window.localStorage.getItem("access_token");
   const rtoken = window.localStorage.getItem("refresh_token");
   const body={
-      name: name,
+      name: naam,
       phoneNumber:number,
-      profileImageUrl:url
+      formData:image
     }
+    console.log(body);
   if (atoken) {
               const config = {
                   headers: {
@@ -39,9 +56,10 @@ const clickHandler =()=>{
                     )
                 )
                     .then((res) => {
-                      const {name, phoneNumber, profileImageUrl} = res?.data?.userInfo;
+                      const {name, phoneNumber, data} = res?.data?.userInfo;
                         //successFunction(res)
-                         dispatch(addUser({name:name,phoneNumber:phoneNumber, profileImageUrl:profileImageUrl}));
+                        enqueueSnackbar("User Updated Successfully", {variant: 'success'});
+                         dispatch(addUser({name:name,phoneNumber:phoneNumber, image:data.image}));
                     })
                     .catch((error) => {
                         // Handling case when access token is expired
@@ -77,9 +95,9 @@ const clickHandler =()=>{
                         }
                     });
             } else {
-                // enqueueSnackbar("You need to login first", {
-                //     variant: "error",
-                // });
+                enqueueSnackbar("You need to login first", {
+                    variant: "error",
+                });
                 // window.localStorage.clear();
                 // setLoading(false);
                 navigate("/login");
@@ -88,51 +106,52 @@ const clickHandler =()=>{
             }
         }
   return (
-    <div className="Profile">
-      <form className="user-details-form" onSubmit={(e) => e.preventDefault()}>
-        <div style={{ display: "flex" }}>
-          <img
-            src={file}
-            alt="Avatar Preview"
-            className="avatar-preview"
-          />
-          <input className="button3" type="file" onChange={ImageHandler} />
-          {/* //<button>Upload New Image</button> */}
-        </div>
+    <>
+    <ResponsiveAppBar/>
+      <div className="Profile">
+        <form
+          className="user-details-form"
+          onSubmit={(e) => e.preventDefault()}
+        >
+          <div style={{ display: "flex" }}>
+            <img src={image.preview} alt="Avatar Preview" className="avatar-preview" />
+            <input name='file' className="button3" type="file" onChange={ImageHandler} />
+          </div>
 
-        <div className="form-group">
-          <label>Name:</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e?.target?.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label>Email:</label>
-          <input
-            type="email"
-            // value={formData.email}
-            // onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label>Phone Number:</label>
-          <input
-            type="tel"
-            id="phoneNumber"
-            name="phoneNumber"
-            value={number}
-            onChange={(e) => {
-              setnumber(e?.target?.value);
-            }}
-          />
-        </div>
-        <button className="button2" onClick={clickHandler}>
-          Submit
-        </button>
-      </form>
-    </div>
+          <div className="form-group">
+            <label>Name:</label>
+            <input
+              type="text"
+              // value={naam}
+              defaultValue={user?.name}
+              onChange={(e) => setName(e?.target?.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label>Email:</label>
+            <input
+              type="email"
+              value={user?.email}
+              // onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Phone Number:</label>
+            <input
+              type="tel"
+              // value={number}
+              defaultValue={user?.phoneNumber}
+              onChange={(e) => {
+                setnumber(e?.target?.value);
+              }}
+            />
+          </div>
+          <button className="button2" onClick={clickHandler}>
+            Submit
+          </button>
+        </form>
+      </div>
+    </>
   );
 };
 
