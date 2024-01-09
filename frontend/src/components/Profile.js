@@ -26,7 +26,7 @@ const Profile = () => {
 const ImageHandler=(e)=>{
   let formData = new FormData()
     formData.append('file', image.data)
-  console.log(formData);
+  // console.log(formData);
 const img = {
   preview: URL.createObjectURL(e.target.files[0]),
   data: e.target.files[0],
@@ -42,7 +42,7 @@ const clickHandler =async()=>{
       phoneNumber:number,
       formData:image
     }
-    console.log(body);
+    // console.log(body);
   if (atoken) {
               const config = {
                   headers: {
