@@ -1,12 +1,14 @@
 import User from "../../models/user.js";
 import fs from 'fs'
+import path from 'path'
 const updateProfile = async(req, res) => {
-    const id=req.user._id;
+    const id = req.user._id;
+    console.log(req.body);
     const { name, phoneNumber } = req.body;
-    const image = req.body.image;
-    console.log(image);
+    const File= req.body.formData;
+    
     var data1;
-    fs.readFile(image.path, (err, data) => {
+    fs.readFile(File.path, (err, data) => {
         if (err) {
             return res.status(500).json({ error: err.message });
         }
@@ -15,7 +17,7 @@ const updateProfile = async(req, res) => {
    // console.log(id,name,profileImageUrl,phoneNumber);
     const user = await User.findOneAndUpdate({_id:id}, {$set: {name:name, profileImageUrl:data1, phoneNumber:phoneNumber}},  { new: true, useFindAndModify: false });
     console.log(user);
-    fs.unlinkSync(image.path);
+    fs.unlinkSync(File.path);
     // console.log(phoneNumber);
     res.json({
         message: 'User Info Updated successfully',
