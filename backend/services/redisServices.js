@@ -1,9 +1,12 @@
 import Redis from 'ioredis';
+import dotenv from 'dotenv';
+dotenv.config();
 // import REDIS_URL from 
-const redisUrl = "redis://default:60fac3617d5649f2b78d698689348268@us1-sterling-poodle-38635.upstash.io:38635"
+const redisUrl = process.env.Redis_Url
+//console.log(redisUrl);
 class RedisServices{
     static createClient(){
-        return new Redis(redisUrl);
+        return new Redis("rediss://default:8a187adaba404d059ac71e6f37442ae6@usw1-sharing-alien-33586.upstash.io:33586");
     }
 }
 export default RedisServices;

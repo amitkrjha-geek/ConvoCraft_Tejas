@@ -1,9 +1,11 @@
 import JWTSERVICES from "../../services/jwtServices.js";
 import joi from "joi";
 import RedisServices from "../../services/redisServices.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 const logout = async (req, res, next) => {
-  const refresh_secret="mynameisankurshukla"
+  const refresh_secret = process.env.REFRESH_SECRET;
   const schema = joi.object({
     refresh_token: joi.string().required(),
   });
