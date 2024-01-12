@@ -1,6 +1,6 @@
 import jwtService from "../../services/jwtServices.js";
 import joi from "joi"
-import user from "../../models/user.js";
+import user from "../../models/User.js";
 import RedisServices from "../../services/redisServices.js";
 import dotenv from 'dotenv';
 dotenv.config();

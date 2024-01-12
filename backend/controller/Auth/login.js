@@ -2,7 +2,7 @@ import express from "express";
 import Joi from "joi";
 import bycrypt from "bcrypt";
 import axios from "axios";
-import User from '../../models/user.js';
+import User from '../../models/User.js';
 import JWTSERVICES from "../../services/jwtServices.js";
 //import createClient from "../../services/redisServices.js";
 import RedisServices from "../../services/redisServices.js";
