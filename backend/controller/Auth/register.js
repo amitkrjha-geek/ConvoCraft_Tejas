@@ -1,6 +1,6 @@
 import express from "express";
 import Joi from "joi";
-import bycrypt from "bcrypt";
+import bycrypt from "bcryptjs";
 import User from '../../models/User.js';
 import RedisServices from "../../services/redisServices.js";
 const router = express.Router();

@@ -23,6 +23,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+router.get('')
 router.put('/user/', auth,upload.single('file'),updateProfile)
 router.get('/user/',auth,getUser)
 router.post("/register", registerUser);

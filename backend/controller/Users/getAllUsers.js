@@ -1,5 +1,5 @@
 import asyncHandler from 'express-async-handler';
-import User from '../../models/User';
+import User from '../../models/User.js';
 export const allUsers = asyncHandler(async (req, res) => {
     const keyword = req.query.search
         ? {
@@ -15,3 +15,5 @@ export const allUsers = asyncHandler(async (req, res) => {
     });
     res.send(users);
 });
+//AKIAU6GD35BBJVLI6CEY
+//Ic2TZ95VHKPZWV7Xayo58ACPRJKtd2ZnsonvULOQ

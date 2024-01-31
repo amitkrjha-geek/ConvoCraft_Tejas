@@ -1,5 +1,5 @@
 import jwtService from "../services/jwtServices.js";
-import user from "../models/user.js";
+import user from "../models/User.js";
 const auth = async (req, res, next) => {
     const authHeader = req.headers.authorization;
     // console.log(req.headers)
