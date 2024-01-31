@@ -12,7 +12,7 @@ const registerUser = async (req, res, next) => {
     });;
     const { error } = userSchema.validate(req.body);
     if (error) {
-      console.log(error);
+      //console.log(error);
       return next(error);
     }
   
@@ -29,7 +29,7 @@ const registerUser = async (req, res, next) => {
       console.log(hashedPassword);
       User.create({ name: name, email: email, password: hashedPassword })
         .then(async () => {
-          console.log("first")
+         // console.log("first")
           const otp = generateOtpCode();
           const config = {
             headers: {
@@ -56,7 +56,7 @@ const registerUser = async (req, res, next) => {
           //     console.log(err)
           //     console.log("error in sending mail to :" + email);
           //   });
-          console.log("first1", success);
+          //console.log("first1", success);
 
           if (success) {
             // set the otp in redis
@@ -73,7 +73,7 @@ const registerUser = async (req, res, next) => {
           return res.status(201).json({ message: "User created successfully" });
         })
         .catch((err) => {
-          console.log("error detected in user creation")
+          //console.log("error detected in user creation")
           return res.status(500).json({ error: err.message });
         });
     } catch (err) {

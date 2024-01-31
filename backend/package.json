@@ -2,7 +2,11 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
+<<<<<<< HEAD:backend/package.json
   "main": "index.js",
+=======
+  "main": "backend/server.js",
+>>>>>>> 6851ef50052a89cb7c70e281d3f90877c905a9bb:package.json
   "type": "module",
   "scripts": {
     "start": "node server.js",
